@@ -32,12 +32,12 @@ workflows:
           filters:
             tags:
               ignore: /.*/
-      - hmpps/build_docker:
-          name: build_docker
-          filters:
-            branches:
-              only:
-                - main
+#      - hmpps/build_docker:
+#          name: build_docker
+#          filters:
+#            branches:
+#              only:
+#                - main
 
   scheduled:
     triggers:
