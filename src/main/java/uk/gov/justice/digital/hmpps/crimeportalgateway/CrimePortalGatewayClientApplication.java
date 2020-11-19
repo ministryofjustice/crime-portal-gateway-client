@@ -1,11 +1,14 @@
 package uk.gov.justice.digital.hmpps.crimeportalgateway;
 
+import java.util.Optional;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import uk.gov.justice.magistrates.external.externaldocumentrequest.AckType;
 import uk.gov.justice.magistrates.external.externaldocumentrequest.Acknowledgement;
 import uk.gov.justice.magistrates.external.externaldocumentrequest.Document;
 import uk.gov.justice.magistrates.external.externaldocumentrequest.Documents;
@@ -25,13 +28,15 @@ public class CrimePortalGatewayClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        ExternalDocumentRequest request = new ExternalDocumentRequest();
-        Documents documents = new Documents();
-        documents.setJobNumber("1");
+        final String jobNumber = "1";
+        final ExternalDocumentRequest request = new ExternalDocumentRequest();
+        final Documents documents = new Documents();
+        documents.setJobNumber(jobNumber);
         documents.getDocument().add(0, new Document());
         request.setDocuments(documents);
 
-        Acknowledgement ack = crimePortalGatewayClient.getAck(request);
-        LOG.info("For Job number {}, got message status {}", "1", ack.getAckType().getMessageStatus());
+        final Acknowledgement ack = crimePortalGatewayClient.getAck(request);
+        LOG.info("For job number {}, ack {} with comment {}",
+            jobNumber, ack, Optional.ofNullable(ack.getAckType()).map(AckType::getMessageComment).orElse("[not set]"));
     }
 }

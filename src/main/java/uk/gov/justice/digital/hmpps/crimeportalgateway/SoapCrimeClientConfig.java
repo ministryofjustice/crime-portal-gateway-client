@@ -16,29 +16,30 @@ import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.soap.security.wss4j2.Wss4jSecurityInterceptor;
 import org.springframework.ws.soap.security.wss4j2.support.CryptoFactoryBean;
+import uk.gov.justice.magistrates.external.externaldocumentrequest.AckType;
 import uk.gov.justice.magistrates.external.externaldocumentrequest.Acknowledgement;
 import uk.gov.justice.magistrates.external.externaldocumentrequest.ExternalDocumentRequest;
 
 @Configuration
 public class SoapCrimeClientConfig {
 
-    @Value("${soap-default-uri}")
+    @Value("${soap.default-uri}")
     private String defaultUri;
 
     @Value("${keystore-password}")
     private String keystorePassword;
 
-    @Value("${cert-entry-alias-name}")
-    private String aliasName;
+    @Value("${trusted-cert-alias-name}")
+    private String trustedCertAliasName;
 
     @Value("${private-key-alias-name}")
     private String privateKeyAliasName;
 
-    @Value("${actions}")
+    @Value("${ws-sec.actions}")
     private String actions;
 
-    @Value("${encryption-parts}")
-    private String encryptionParts;
+    @Value("${ws-sec.request-encryption-parts}")
+    private String requestEncryptionParts;
 
     @Bean
     public MessageFactory messageFactory() throws SOAPException {
@@ -64,9 +65,9 @@ public class SoapCrimeClientConfig {
         securityInterceptor.setSecurementSignatureCrypto(getCryptoFactoryBean().getObject());
 
         // encrypt the request
-        securityInterceptor.setSecurementEncryptionUser(aliasName);
+        securityInterceptor.setSecurementEncryptionUser(trustedCertAliasName);
         securityInterceptor.setSecurementEncryptionCrypto(getCryptoFactoryBean().getObject());
-        securityInterceptor.setSecurementEncryptionParts(encryptionParts);
+        securityInterceptor.setSecurementEncryptionParts(requestEncryptionParts);
 
         return securityInterceptor;
     }
@@ -82,7 +83,7 @@ public class SoapCrimeClientConfig {
     @Bean
     public Jaxb2Marshaller getMarshaller(){
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setClassesToBeBound(ExternalDocumentRequest.class, Acknowledgement.class);
+        marshaller.setPackagesToScan("uk.gov.justice.magistrates.external.externaldocumentrequest");
         return marshaller;
     }
 
