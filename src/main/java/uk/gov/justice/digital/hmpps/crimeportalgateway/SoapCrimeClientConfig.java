@@ -1,6 +1,8 @@
 package uk.gov.justice.digital.hmpps.crimeportalgateway;
 
 import java.io.IOException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPException;
@@ -16,8 +18,6 @@ import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.soap.security.wss4j2.Wss4jSecurityInterceptor;
 import org.springframework.ws.soap.security.wss4j2.support.CryptoFactoryBean;
-import uk.gov.justice.magistrates.external.externaldocumentrequest.AckType;
-import uk.gov.justice.magistrates.external.externaldocumentrequest.Acknowledgement;
 import uk.gov.justice.magistrates.external.externaldocumentrequest.ExternalDocumentRequest;
 
 @Configuration
@@ -50,7 +50,6 @@ public class SoapCrimeClientConfig {
     public WebServiceMessageFactory webServiceMessageFactory(@Autowired MessageFactory messageFactory) {
         return new SaajSoapMessageFactory(messageFactory);
     }
-
 
     @Bean
     public Wss4jSecurityInterceptor securityInterceptor() throws Exception {
@@ -104,4 +103,8 @@ public class SoapCrimeClientConfig {
         return new CrimePortalGatewayClient(webServiceTemplate);
     }
 
+    @Bean
+    public JAXBContext jaxbContext() throws JAXBException {
+        return JAXBContext.newInstance(ExternalDocumentRequest.class);
+    }
 }
