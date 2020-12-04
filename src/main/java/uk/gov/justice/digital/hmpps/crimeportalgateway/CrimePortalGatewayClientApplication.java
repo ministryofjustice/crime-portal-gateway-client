@@ -1,21 +1,22 @@
 package uk.gov.justice.digital.hmpps.crimeportalgateway;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import uk.gov.justice.magistrates.external.externaldocumentrequest.Acknowledgement;
-import uk.gov.justice.magistrates.external.externaldocumentrequest.Document;
-import uk.gov.justice.magistrates.external.externaldocumentrequest.Documents;
-import uk.gov.justice.magistrates.external.externaldocumentrequest.ExternalDocumentRequest;
+import uk.gov.justice.magistrates.external.externaldocumentrequest.AckType;
 
 @SpringBootApplication
 public class CrimePortalGatewayClientApplication implements CommandLineRunner {
 
     @Autowired
     private CrimePortalGatewayClient crimePortalGatewayClient;
+
+    @Autowired
+    private MessageParser messageParser;
 
     private static final Logger LOG = LoggerFactory.getLogger(CrimePortalGatewayClientApplication.class);
 
@@ -25,13 +26,11 @@ public class CrimePortalGatewayClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        ExternalDocumentRequest request = new ExternalDocumentRequest();
-        Documents documents = new Documents();
-        documents.setJobNumber("1");
-        documents.getDocument().add(0, new Document());
-        request.setDocuments(documents);
 
-        Acknowledgement ack = crimePortalGatewayClient.getAck(request);
-        LOG.info("For Job number {}, got message status {}", "1", ack.getAckType().getMessageStatus());
+        messageParser.loadFromFile("src/main/resources/requests/external-document-request.xml")
+            .map(externalDocumentRequest -> crimePortalGatewayClient.getAck(externalDocumentRequest))
+            .ifPresentOrElse(ack -> LOG.info("Received ack {} with comment {}",
+                ack, Optional.ofNullable(ack.getAckType()).map(AckType::getMessageComment).orElse("[not set]"))
+                , () -> LOG.error("No ack received"));
     }
 }

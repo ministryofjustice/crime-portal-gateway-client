@@ -1,4 +1,2 @@
-soap-default-uri: "http://localhost:8080/crime-portal-gateway/ws"
-keystore-password: changeit
-cert-entry-alias-name: server-public
-private-key-alias-name: client
+soap:
+  default-uri: "http://localhost:8080/crime-portal-gateway/ws"

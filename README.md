@@ -26,12 +26,10 @@ The application runs it requires a keystore (JKS). TBD
 # Environment variables
 
 
-
 | Syntax           | Description | Example |
 | ---------------- | ----------- |---------
 | soap-default-uri | The WS endpoint to call | http://localhost:8080/crime-portal-gateway/ws|
 | keystore-password | Password used for the JKS | changeit |
-| cert-entry-alias-name | Alias for the trusted certicate in the JKS | server-public |
+| trusted-cert-alias-name | Alias for the trusted certificate in the JKS | server-public |
 | private-key-alias-name | Password used for the JKS | client |
-
 
