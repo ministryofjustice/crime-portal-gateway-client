@@ -48,7 +48,7 @@ SPRING_PROFILES_ACTIVE=cpg-dev ./gradlew bootRun
 
 Start the app with the CPG PRE-PROD profile. Communicates to the SOAP endpoint at https://crime-portal-gateway-preprod.apps.live-1.cloud-platform.service.justice.gov.uk/crime-portal-gateway/ws/, with an encrypted and signed message. The environment variables shown are samples and may be adjusted for the key pair being used.
 ```
-SPRING_PROFILES_ACTIVE=cpg-preprod KEYSTORE_PASSWORD=changeit TRUSTED_CERT_ALIAS_NAME=server-public PRIVATE_KEY_ALIAS_NAME=client ./gradlew bootRun
+SPRING_PROFILES_ACTIVE=cpg-preprod ./gradlew bootRun
 ```
 
 
