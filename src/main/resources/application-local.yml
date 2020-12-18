@@ -1,2 +1,3 @@
 soap:
   default-uri: "http://localhost:8080/crime-portal-gateway/ws"
+  encrypt-payload: true

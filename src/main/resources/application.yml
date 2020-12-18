@@ -12,7 +12,6 @@ spring:
 
 soap:
   encrypt-payload: true
-  default-uri: "http://localhost:8080/crime-portal-gateway/ws"
 
 ws-sec:
   request-encryption-parts: "{Content}{http://www.justice.gov.uk/magistrates/external/ExternalDocumentRequest}ExternalDocumentRequest"
