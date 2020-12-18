@@ -23,9 +23,18 @@ When the application runs it requires a java keystore (JKS) in order to sign and
 The application has pre-configured profiles - local, dev and preprod. 
 
 ## Pre-requisites
-You will need a 
+You will need 
 * JDK at version 11 or higher
 * Gradle at version 6.3 or higher
+
+# Crime Portal Gateway
+
+CPG exposes endpoints for health (/health) and WSDL (/crime-portal-gateway/ws/ExternalDocumentRequest.wsdl). These can be checked prior to running the test. The hosts are as follows 
+
+* Dev       https://crime-portal-gateway-dev.apps.live-1.cloud-platform.service.justice.gov.uk/
+* Preprod   https://crime-portal-gateway-preprod.apps.live-1.cloud-platform.service.justice.gov.uk/
+
+# Running the client
 
 Start the LOCAL spring profile. Communicates to the SOAP endpoint running at localhost, unencrypted by default.
 ```
