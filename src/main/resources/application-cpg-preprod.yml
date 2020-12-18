@@ -1,0 +1,3 @@
+soap:
+  default-uri: "https://crime-portal-gateway-preprod.apps.live-1.cloud-platform.service.justice.gov.uk/crime-portal-gateway/ws/"
+  encrypt-payload: true

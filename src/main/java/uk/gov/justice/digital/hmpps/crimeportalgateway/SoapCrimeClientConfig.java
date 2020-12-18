@@ -83,8 +83,9 @@ public class SoapCrimeClientConfig {
         webServiceTemplate.setMarshaller(jaxb2Marshaller);
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(defaultUri);
-        if (encryptPayload)
+        if (encryptPayload) {
             webServiceTemplate.setInterceptors(new ClientInterceptor[]{securityInterceptor(cryptoFactoryBean)});
+        }
         return webServiceTemplate;
     }
 
