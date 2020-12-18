@@ -36,6 +36,8 @@ CPG exposes endpoints for health (/health) and WSDL (/crime-portal-gateway/ws/Ex
 
 # Running the client
 
+If running securely, then copy the client.jks file to src/main/resources.
+
 Start the LOCAL spring profile. Communicates to the SOAP endpoint running at localhost, unencrypted by default.
 ```
 SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
