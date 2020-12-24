@@ -11,8 +11,12 @@ spring:
       org.springframework.ws.server.MessageTracing: TRACE
 
 soap:
-  default-uri: "http://localhost:8080/crime-portal-gateway/ws"
+  encrypt-payload: true
 
 ws-sec:
   request-encryption-parts: "{Content}{http://www.justice.gov.uk/magistrates/external/ExternalDocumentRequest}ExternalDocumentRequest"
   actions: "Signature Encrypt"
+
+private-key-alias-name: client
+trusted-cert-alias-name: server-public
+keystore-password: changeit
