@@ -13,10 +13,10 @@ When the application runs it requires a java keystore (JKS) in order to sign and
 
 | Syntax           | Description | Example |
 | ---------------- | ----------- |---------
-| soap-default-uri | The WS endpoint to call | http://localhost:8080/crime-portal-gateway/ws|
-| keystore-password | Password used for the JKS | changeit |
-| trusted-cert-alias-name | Alias for the trusted certificate in the JKS | server-public |
-| private-key-alias-name | Password used for the JKS | client |
+| soap_default_uri | The WS endpoint to call | http://localhost:8080/crime-portal-gateway/ws|
+| keystore_password | Password used for the JKS | changeit |
+| trusted_cert_alias_name | Alias for the trusted certificate in the JKS | server-public |
+| private_key_alias_name | Password used for the JKS | client |
 
 # Instructions
 
@@ -40,17 +40,17 @@ If running securely, then copy the client.jks file to src/main/resources.
 
 Start the LOCAL spring profile. Communicates to the SOAP endpoint running at localhost, unencrypted by default.
 ```
-SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
+KEYSTORE_PASSWORD=[insert password] SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
 ```
 
 Start the app with the CPG DEV spring profile. Communicates to the SOAP endpoint at https://crime-portal-gateway-dev.apps.live-1.cloud-platform.service.justice.gov.uk/crime-portal-gateway/ws/, with an unencrypted and unsigned message.
 ```
-SPRING_PROFILES_ACTIVE=cpg-dev ./gradlew bootRun
+KEYSTORE_PASSWORD=[insert password] SPRING_PROFILES_ACTIVE=cpg-dev ./gradlew bootRun
 ```
 
 Start the app with the CPG PRE-PROD profile. Communicates to the SOAP endpoint at https://crime-portal-gateway-preprod.apps.live-1.cloud-platform.service.justice.gov.uk/crime-portal-gateway/ws/, with an encrypted and signed message. The environment variables shown are samples and may be adjusted for the key pair being used.
 ```
-SPRING_PROFILES_ACTIVE=cpg-preprod ./gradlew bootRun
+KEYSTORE_PASSWORD=[insert password] SPRING_PROFILES_ACTIVE=cpg-preprod ./gradlew bootRun
 ```
 
 
