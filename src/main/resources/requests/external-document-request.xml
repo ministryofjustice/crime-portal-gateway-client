@@ -2,7 +2,23 @@
   <documents>
     <document>
       <info>
+        <general>
+          <doc_type>EDT_Adult_Daily_Courtlist</doc_type>
+          <outputtype>R</outputtype>
+          <version>1_0</version>
+          <docref>-28724</docref>
+          <system>L</system>
+        </general>
         <source_file_name>5_27022020_2992_B10JQ00_ADULT_COURT_LIST_DAILY</source_file_name>
+        <printers/>
+        <parameters>
+          <pi_mcc_id>1</pi_mcc_id>
+          <pi_psa_code>2572</pi_psa_code>
+          <pi_job_type>ADULT_COURT_LIST_DAILY</pi_job_type>
+          <pi_run_date>08/01/2021</pi_run_date>
+          <pi_edt_user_id>479433</pi_edt_user_id>
+        </parameters>
+        <start_time>09:01:12</start_time>
       </info>
       <data>
         <job>

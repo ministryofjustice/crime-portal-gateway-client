@@ -8,9 +8,7 @@ import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPException;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -45,6 +43,9 @@ public class SoapCrimeClientConfig {
     @Value("${ws-sec.request-encryption-parts}")
     private String requestEncryptionParts;
 
+    @Value("${ws-sec.keystore-file}")
+    private String keystoreFile;
+
     @Value("${soap.encrypt-payload}")
     private boolean encryptPayload;
 
@@ -62,7 +63,7 @@ public class SoapCrimeClientConfig {
     public CryptoFactoryBean getCryptoFactoryBean() throws IOException {
         CryptoFactoryBean cryptoFactoryBean = new CryptoFactoryBean();
         cryptoFactoryBean.setKeyStorePassword(keystorePassword);
-        cryptoFactoryBean.setKeyStoreLocation(new ClassPathResource("client.jks"));
+        cryptoFactoryBean.setKeyStoreLocation(new ClassPathResource(keystoreFile));
         return cryptoFactoryBean;
     }
 
@@ -76,7 +77,8 @@ public class SoapCrimeClientConfig {
     @Bean
     public WebServiceTemplate webServiceTemplate(WebServiceMessageFactory webServiceMessageFactory,
                                                  Jaxb2Marshaller jaxb2Marshaller,
-                                                 CryptoFactoryBean cryptoFactoryBean) throws Exception {
+                                                 CryptoFactoryBean cryptoFactoryBean,
+                                                 ActionInterceptor actionInterceptor) throws Exception {
         log.info(String.format("Default uri: %s", defaultUri));
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMessageFactory(webServiceMessageFactory);
@@ -84,7 +86,7 @@ public class SoapCrimeClientConfig {
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller);
         webServiceTemplate.setDefaultUri(defaultUri);
         if (encryptPayload) {
-            webServiceTemplate.setInterceptors(new ClientInterceptor[]{securityInterceptor(cryptoFactoryBean)});
+            webServiceTemplate.setInterceptors(new ClientInterceptor[]{securityInterceptor(cryptoFactoryBean), actionInterceptor});
         }
         return webServiceTemplate;
     }
@@ -114,6 +116,8 @@ public class SoapCrimeClientConfig {
         securityInterceptor.setSecurementEncryptionUser(trustedCertAliasName);
         securityInterceptor.setSecurementEncryptionCrypto(cryptoFactoryBean.getObject());
         securityInterceptor.setSecurementEncryptionParts(requestEncryptionParts);
+
+        securityInterceptor.setValidationDecryptionCrypto(cryptoFactoryBean.getObject());
 
         return securityInterceptor;
     }

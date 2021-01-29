@@ -31,4 +31,6 @@ HELP.md
 
 ### VS Code ###
 .vscode/
-/client.jks
+
+### Keystore (Java)
+**/*.jks
