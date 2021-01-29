@@ -6,17 +6,19 @@ spring:
   logging:
     level:
       org.springframework.web: INFO
-      org.springframework.ws.client.MessageTracing.sent: TRACE
+      org.springframework.ws.client.MessageTracing.sent: DEBUG
       org.springframework.ws.client.MessageTracing.received: TRACE
       org.springframework.ws.server.MessageTracing: TRACE
 
 soap:
   encrypt-payload: true
+  action: externalDocument
 
 ws-sec:
-  request-encryption-parts: "{Content}{http://www.justice.gov.uk/magistrates/external/ExternalDocumentRequest}ExternalDocumentRequest"
+  request-encryption-parts: "{Content}{http://www.w3.org/2003/05/soap-envelope}Body"
   actions: "Signature Encrypt"
+  keystore-file: client.jks
 
 private-key-alias-name: client
 trusted-cert-alias-name: server-public
-keystore-password: changeit
+

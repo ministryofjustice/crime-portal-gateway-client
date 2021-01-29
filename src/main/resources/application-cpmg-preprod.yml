@@ -1,0 +1,2 @@
+soap:
+  default-uri: "https://preprod.crime-portal-mirror-gateway.service.justice.gov.uk/mirrorgateway/service/cpmgwextdocapi"
